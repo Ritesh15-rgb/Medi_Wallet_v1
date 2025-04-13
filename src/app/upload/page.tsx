@@ -8,6 +8,7 @@ import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/compo
 import {uploadFile} from "@/lib/firebase/storage";
 import {saveRecordMetadata} from "@/lib/firebase/firestore";
 import {useToast} from "@/hooks/use-toast";
+import {useRouter} from "next/navigation";
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
@@ -15,6 +16,7 @@ export default function Upload() {
   const [reportType, setReportType] = useState("");
   const [uploading, setUploading] = useState(false);
   const {toast} = useToast();
+  const router = useRouter();
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
@@ -57,6 +59,10 @@ export default function Upload() {
       setFile(null);
       setDoctorName("");
       setReportType("");
+
+      // Redirect to the view page
+      router.push("/view");
+
     } catch (error: any) {
       toast({
         title: "Error",
