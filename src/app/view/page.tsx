@@ -23,6 +23,7 @@ interface Record {
   fileUrl: string;
   fileName: string;
   timestamp: any; // Firebase Timestamp
+  location: string; // Location of the record
 }
 
 export default function View() {
@@ -39,6 +40,7 @@ export default function View() {
           return {
             ...data,
             timestamp: data.timestamp, // Keep the Firebase Timestamp object
+            location: data.location || 'N/A', // Provide a default value if location is missing
           };
         });
         setRecords(recordsData);
@@ -95,6 +97,7 @@ export default function View() {
               <CardContent className="p-4">
                 <p>Doctor: {record.doctorName}</p>
                 <p>Report Type: {record.reportType}</p>
+                <p>Location: {record.location}</p> {/* Display the location */}
                 <a href={record.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
                   View File
                 </a>

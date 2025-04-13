@@ -3,7 +3,6 @@
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
 import {Input} from "@/components/ui/input";
-import {Textarea} from "@/components/ui/textarea";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {uploadFile} from "@/lib/firebase/storage";
 import {saveRecordMetadata} from "@/lib/firebase/firestore";
@@ -14,6 +13,7 @@ export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
   const [doctorName, setDoctorName] = useState("");
   const [reportType, setReportType] = useState("");
+  const [location, setLocation] = useState("");
   const [uploading, setUploading] = useState(false);
   const {toast} = useToast();
   const router = useRouter();
@@ -48,6 +48,7 @@ export default function Upload() {
         reportType,
         fileUrl: downloadURL,
         fileName: fileName,
+        location: location,
       });
 
       toast({
@@ -59,6 +60,7 @@ export default function Upload() {
       setFile(null);
       setDoctorName("");
       setReportType("");
+      setLocation("");
 
       // Redirect to the view page
       router.push("/view");
@@ -108,6 +110,19 @@ export default function Upload() {
                 placeholder="Enter report type"
                 value={reportType}
                 onChange={(e) => setReportType(e.target.value)}
+                required
+              />
+            </div>
+            <div>
+              <label htmlFor="location" className="block text-gray-700 text-sm font-bold mb-2">
+                Location
+              </label>
+              <Input
+                type="text"
+                id="location"
+                placeholder="Enter location"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
                 required
               />
             </div>
