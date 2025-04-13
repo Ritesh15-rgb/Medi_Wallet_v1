@@ -17,7 +17,7 @@ export default function Home() {
   }, [router]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary p-4">
       <Card className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold text-primary">MediVault</CardTitle>

@@ -174,7 +174,7 @@ export default function Upload() {
               {file && <p className="text-gray-500 text-sm mt-1">Selected file: {file.name}</p>}
             </div>
             <Button type="submit" disabled={uploading}>
-              {uploading ? "Saving..." : "Save"}
+              {uploading ? "Save"}
             </Button>
           </form>
         </CardContent>
