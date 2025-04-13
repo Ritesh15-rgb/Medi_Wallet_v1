@@ -19,38 +19,38 @@ export default function Upload() {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length > 0) {
       setFile(e.target.files[0]);
+    } else {
+      setFile(null);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!file) {
-      toast({
-        title: "Error",
-        description: "Please select a file to upload.",
-        variant: "destructive",
-      });
-      return;
-    }
-
     setUploading(true);
 
     try {
-      // Upload the file to Firebase Storage
-      const downloadURL = await uploadFile(file);
+      let downloadURL = "";
+      let fileName = "";
+
+      if (file) {
+        // Upload the file to Firebase Storage
+        downloadURL = await uploadFile(file);
+        fileName = file.name;
+      }
+
 
       // Save the metadata to Firestore
       await saveRecordMetadata({
         doctorName,
         reportType,
         fileUrl: downloadURL,
-        fileName: file.name,
+        fileName: fileName,
       });
 
       toast({
         title: "Success",
-        description: "File uploaded successfully!",
+        description: "Record saved successfully!",
       });
 
       // Reset the form
@@ -60,7 +60,7 @@ export default function Upload() {
     } catch (error: any) {
       toast({
         title: "Error",
-        description: error.message || "Failed to upload the file.",
+        description: error.message || "Failed to save the record.",
         variant: "destructive",
       });
     } finally {
@@ -107,13 +107,13 @@ export default function Upload() {
             </div>
             <div>
               <label htmlFor="file" className="block text-gray-700 text-sm font-bold mb-2">
-                Select File
+                Select File (Optional)
               </label>
-              <Input type="file" id="file" onChange={handleFileChange} required/>
+              <Input type="file" id="file" onChange={handleFileChange}/>
               {file && <p className="text-gray-500 text-sm mt-1">Selected file: {file.name}</p>}
             </div>
             <Button type="submit" disabled={uploading}>
-              {uploading ? "Uploading..." : "Upload"}
+              {uploading ? "Saving..." : "Save"}
             </Button>
           </form>
         </CardContent>
