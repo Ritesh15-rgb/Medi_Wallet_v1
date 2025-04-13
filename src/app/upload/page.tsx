@@ -8,12 +8,18 @@ import {uploadFile} from "@/lib/firebase/storage";
 import {saveRecordMetadata} from "@/lib/firebase/firestore";
 import {useToast} from "@/hooks/use-toast";
 import {useRouter} from "next/navigation";
+import {Calendar} from "@/components/ui/calendar";
+import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
+import {cn} from "@/lib/utils";
+import {format} from "date-fns";
+import {CalendarIcon} from "lucide-react";
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
   const [doctorName, setDoctorName] = useState("");
   const [reportType, setReportType] = useState("");
   const [location, setLocation] = useState("");
+  const [date, setDate] = useState<Date | undefined>(new Date());
   const [uploading, setUploading] = useState(false);
   const {toast} = useToast();
   const router = useRouter();
@@ -49,6 +55,7 @@ export default function Upload() {
         fileUrl: downloadURL,
         fileName: fileName,
         location: location,
+        date: date,
       });
 
       toast({
@@ -61,6 +68,7 @@ export default function Upload() {
       setDoctorName("");
       setReportType("");
       setLocation("");
+      setDate(undefined);
 
       // Redirect to the view page
       router.push("/view");
@@ -77,7 +85,7 @@ export default function Upload() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary p-4">
       <Card className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-primary">Upload Medical Record</CardTitle>
@@ -126,6 +134,38 @@ export default function Upload() {
                 required
               />
             </div>
+
+            <div>
+              <label htmlFor="date" className="block text-gray-700 text-sm font-bold mb-2">
+                Date
+              </label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant={"outline"}
+                    className={cn(
+                      "w-full justify-start text-left font-normal",
+                      !date && "text-muted-foreground"
+                    )}
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4"/>
+                    {date ? format(date, "PPP") : <span>Pick a date</span>}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="center" side="bottom">
+                  <Calendar
+                    mode="single"
+                    selected={date}
+                    onSelect={setDate}
+                    disabled={(date) =>
+                      date > new Date()
+                    }
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
             <div>
               <label htmlFor="file" className="block text-gray-700 text-sm font-bold mb-2">
                 Select File (Optional)

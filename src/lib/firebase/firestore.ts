@@ -20,7 +20,8 @@ interface RecordMetadata {
   reportType: string;
   fileUrl: string;
   fileName: string;
-  location: string; // Location of the record
+  location: string;
+  date: Date | undefined;
 }
 
 export const saveRecordMetadata = async (metadata: RecordMetadata): Promise<void> => {

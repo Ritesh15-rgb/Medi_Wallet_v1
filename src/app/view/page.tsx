@@ -1,10 +1,11 @@
 "use client";
 
 import {useState, useEffect} from "react";
-import {getFirestore, collection, getDocs} from "firebase/firestore";
+import {getFirestore, collection, getDocs, query, orderBy} from "firebase/firestore";
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from "@/lib/firebase/config";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {format} from 'date-fns';
 
 // Initialize Firebase if not already initialized
 try {
@@ -22,8 +23,8 @@ interface Record {
   reportType: string;
   fileUrl: string;
   fileName: string;
-  timestamp: any; // Firebase Timestamp
-  location: string; // Location of the record
+  date: any;
+  location: string;
 }
 
 export default function View() {
@@ -34,13 +35,14 @@ export default function View() {
     const fetchRecords = async () => {
       setLoading(true);
       try {
-        const querySnapshot = await getDocs(collection(db, "medicalRecords"));
+        const q = query(collection(db, "medicalRecords"), orderBy("date", "desc"));
+        const querySnapshot = await getDocs(q);
         const recordsData: Record[] = querySnapshot.docs.map(doc => {
           const data = doc.data() as Record;
           return {
             ...data,
-            timestamp: data.timestamp, // Keep the Firebase Timestamp object
-            location: data.location || 'N/A', // Provide a default value if location is missing
+            date: data.date ? data.date.toDate() : null,
+            location: data.location || 'N/A',
           };
         });
         setRecords(recordsData);
@@ -54,23 +56,9 @@ export default function View() {
     fetchRecords();
   }, []);
 
-  const formatDate = (timestamp: any) => {
-    if (!timestamp) return 'N/A';
-
-    try {
-      const date = timestamp.toDate(); // Convert Firebase Timestamp to JavaScript Date object
-      return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'long',
-        day: 'numeric',
-        hour: 'numeric',
-        minute: 'numeric',
-        second: 'numeric',
-      });
-    } catch (e) {
-      console.error("Error formatting date", e);
-      return 'Invalid Date';
-    }
+  const formatDate = (date: Date | null) => {
+    if (!date) return 'N/A';
+    return format(date, 'PPP hh:mm a');
   };
 
   if (loading) {
@@ -91,14 +79,15 @@ export default function View() {
               <CardHeader>
                 <CardTitle className="text-xl font-bold text-primary">{record.fileName}</CardTitle>
                 <CardDescription>
-                  Uploaded on: {formatDate(record.timestamp)}
+                  Uploaded on: {formatDate(record.date)}
                 </CardDescription>
               </CardHeader>
               <CardContent className="p-4">
                 <p>Doctor: {record.doctorName}</p>
                 <p>Report Type: {record.reportType}</p>
-                <p>Location: {record.location}</p> {/* Display the location */}
-                <a href={record.fileUrl} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+                <p>Location: {record.location}</p>
+                <a href={record.fileUrl} target="_blank" rel="noopener noreferrer"
+                   className="text-blue-500 hover:underline">
                   View File
                 </a>
               </CardContent>
