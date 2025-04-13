@@ -1,5 +1,6 @@
+"use client";
 // src/lib/firebase/firestore.ts
-import {getFirestore, collection, addDoc} from "firebase/firestore";
+import {getFirestore, collection, addDoc, serverTimestamp} from "firebase/firestore";
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from "@/lib/firebase/config";
 
@@ -23,7 +24,10 @@ interface RecordMetadata {
 
 export const saveRecordMetadata = async (metadata: RecordMetadata): Promise<void> => {
   try {
-    await addDoc(collection(db, "medicalRecords"), metadata);
+    await addDoc(collection(db, "medicalRecords"), {
+      ...metadata,
+      timestamp: serverTimestamp(), // Add server timestamp
+    });
   } catch (error: any) {
     console.error("Error saving record metadata:", error.message);
     throw new Error(`Failed to save record metadata: ${error.message}`);
