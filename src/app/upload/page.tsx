@@ -20,7 +20,7 @@ export default function Upload() {
   const [reportType, setReportType] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [uploading, setUploading] = useState(false);
+  const [uploading, setLoading] = useState(false);
   const {toast} = useToast();
   const router = useRouter();
 
@@ -35,7 +35,7 @@ export default function Upload() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setUploading(true);
+    setLoading(true);
 
     try {
       let downloadURL = "";
@@ -80,7 +80,7 @@ export default function Upload() {
         variant: "destructive",
       });
     } finally {
-      setUploading(false);
+      setLoading(false);
     }
   };
 

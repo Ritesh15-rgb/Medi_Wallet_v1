@@ -1,5 +1,3 @@
-"use client";
-
 import {useState, useEffect} from "react";
 import {getFirestore, collection, query, where, getDocs, orderBy} from "firebase/firestore";
 import {initializeApp} from "firebase/app";
