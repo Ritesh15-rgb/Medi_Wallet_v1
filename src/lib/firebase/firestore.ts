@@ -28,6 +28,7 @@ export const saveRecordMetadata = async (metadata: RecordMetadata): Promise<void
   try {
     await addDoc(collection(db, "medicalRecords"), {
       ...metadata,
+      date: metadata.date, // Use the provided date
       timestamp: serverTimestamp(), // Add server timestamp
     });
   } catch (error: any) {
