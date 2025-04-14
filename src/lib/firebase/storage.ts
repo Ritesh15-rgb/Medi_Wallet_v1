@@ -1,3 +1,4 @@
+'use client';
 // src/lib/firebase/storage.ts
 import {getStorage, ref, uploadBytes, getDownloadURL} from "firebase/storage";
 import {initializeApp, getApps} from "firebase/app";
@@ -26,15 +27,14 @@ export const uploadFile = async (file: File): Promise<string> => {
         throw new Error("Firebase Storage: No default bucket found.");
     }
 
-    if (!storage) {
-      initializeFirebase();
-      if (!storage) {
-        console.error("Error uploading file: Firebase Storage not initialized.");
-        throw new Error("Firebase Storage not initialized.");
-      }
-    }
-
     try {
+        if (!storage) {
+          initializeFirebase();
+          if (!storage) {
+            console.error("Error uploading file: Firebase Storage not initialized.");
+            throw new Error("Firebase Storage not initialized.");
+          }
+        }
         const storageRef = ref(storage, `medical-records/${file.name}`);
         const snapshot = await uploadBytes(storageRef, file);
         return await getDownloadURL(snapshot.ref);
@@ -43,3 +43,4 @@ export const uploadFile = async (file: File): Promise<string> => {
         throw new Error(`Failed to upload file: ${error.message}`);
     }
 };
+
