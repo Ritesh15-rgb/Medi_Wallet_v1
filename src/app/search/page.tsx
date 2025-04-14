@@ -1,3 +1,5 @@
+;"use client";
+
 import {useState, useEffect} from "react";
 import {getFirestore, collection, query, where, getDocs, orderBy} from "firebase/firestore";
 import {initializeApp} from "firebase/app";
@@ -66,8 +68,8 @@ export default function Search() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary p-4">
-      <h1 className="text-3xl font-bold text-primary mb-4">Search Records</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
+      <h1 className="text-3xl font-bold text-teal-700 mb-4">Search Records</h1>
       <form onSubmit={handleSearch} className="flex space-x-2 mb-4">
         <Input
           type="text"
@@ -80,16 +82,16 @@ export default function Search() {
         </Button>
       </form>
       {searchResults.length > 0 ? (
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {searchResults.map((record, index) => (
-            <Card key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <Card key={index} className="bg-white rounded-xl shadow-md overflow-hidden">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-primary">{record.fileName}</CardTitle>
+                <CardTitle className="text-xl font-bold text-teal-600">{record.fileName}</CardTitle>
                 <CardDescription>
                   Uploaded on: {formatDate(record.date)}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-4">
+              <CardContent className="p-6">
                 <p>Doctor: {record.doctorName}</p>
                 <p>Report Type: {record.reportType}</p>
                 <p>Location: {record.location}</p>

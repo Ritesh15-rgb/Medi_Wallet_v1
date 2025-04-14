@@ -17,16 +17,16 @@ export default function Home() {
   }, [router]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary p-4">
-      <Card className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
+      <Card className="w-full max-w-md bg-white rounded-xl shadow-xl overflow-hidden">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-primary">MediVault</CardTitle>
-          <CardDescription className="text-md text-gray-600">
+          <CardTitle className="text-4xl font-extrabold text-teal-700 tracking-tight">MediVault</CardTitle>
+          <CardDescription className="text-lg text-gray-600">
             Securely Manage Your Medical Records
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-6">
-          <p className="text-gray-700 text-center">
+        <CardContent className="p-8">
+          <p className="text-gray-700 text-center text-lg">
             Redirecting to upload page...
           </p>
         </CardContent>

@@ -1,4 +1,4 @@
-"use client";
+;"use client";
 
 import {useState, useEffect} from "react";
 import {getFirestore, collection, getDocs, query, orderBy} from "firebase/firestore";
@@ -63,29 +63,29 @@ export default function View() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-secondary">
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100">
         <p className="text-gray-700">Loading records...</p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary p-4">
-      <h1 className="text-3xl font-bold text-primary mb-4">View Records</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
+      <h1 className="text-3xl font-bold text-teal-700 mb-4">View Records</h1>
       {records.length > 0 ? (
-        <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {records.map((record, index) => (
-            <Card key={index} className="bg-white rounded-lg shadow-md overflow-hidden">
+            <Card key={index} className="bg-white rounded-xl shadow-md overflow-hidden">
               <CardHeader>
-                <CardTitle className="text-xl font-bold text-primary">{record.fileName}</CardTitle>
+                <CardTitle className="text-xl font-bold text-teal-600">{record.fileName}</CardTitle>
                 <CardDescription>
                   Uploaded on: {formatDate(record.date)}
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-4">
-                <p>Doctor: {record.doctorName}</p>
-                <p>Report Type: {record.reportType}</p>
-                <p>Location: {record.location}</p>
+              <CardContent className="p-6">
+                <p className="text-gray-700">Doctor: {record.doctorName}</p>
+                <p className="text-gray-700">Report Type: {record.reportType}</p>
+                <p className="text-gray-700">Location: {record.location}</p>
                 <a href={record.fileUrl} target="_blank" rel="noopener noreferrer"
                    className="text-blue-500 hover:underline">
                   View File

@@ -1,4 +1,4 @@
-"use client";
+;"use client";
 
 import {useState} from "react";
 import {Button} from "@/components/ui/button";
@@ -47,7 +47,6 @@ export default function Upload() {
         fileName = file.name;
       }
 
-
       // Save the metadata to Firestore
       await saveRecordMetadata({
         doctorName,
@@ -85,16 +84,16 @@ export default function Upload() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary p-4">
-      <Card className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
+      <Card className="w-full max-w-md bg-white rounded-xl shadow-xl overflow-hidden">
         <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-primary">Upload Medical Record</CardTitle>
+          <CardTitle className="text-3xl font-bold text-teal-700">Upload Medical Record</CardTitle>
           <CardDescription className="text-gray-600">
             Store your medical records securely.
           </CardDescription>
         </CardHeader>
-        <CardContent className="p-6">
-          <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <CardContent className="p-8">
+          <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
             <div>
               <label htmlFor="doctorName" className="block text-gray-700 text-sm font-bold mb-2">
                 Doctor's Name
@@ -173,7 +172,7 @@ export default function Upload() {
               <Input type="file" id="file" onChange={handleFileChange}/>
               {file && <p className="text-gray-500 text-sm mt-1">Selected file: {file.name}</p>}
             </div>
-            <Button type="submit" disabled={uploading}>
+            <Button type="submit" disabled={uploading} className="bg-teal-500 hover:bg-teal-700 text-white font-bold py-2 px-4 rounded-xl">
               {uploading ? "Saving..." : "Save"}
             </Button>
           </form>
