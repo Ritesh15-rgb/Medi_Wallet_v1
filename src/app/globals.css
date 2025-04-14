@@ -32,7 +32,9 @@ body {
     --chart-3: 197 37% 24%;
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
-    --radius: 0.5rem;
+    --radius: 0.75rem; /* Increased radius for rounded corners */
+    --shadow-color: 20 10% 40%;
+    --shadow-strength: 3%;
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
@@ -76,6 +78,16 @@ body {
     --sidebar-border: 240 3.7% 15.9%;
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
+
+  /* Shadow utilities */
+  .shadow-md {
+    box-shadow: hsl(var(--shadow-color)) 0px 0px 20px 0px,
+      hsl(var(--shadow-color) / var(--shadow-strength)) 0px 0px 0px 1px;
+  }
+
+  .drop-shadow-md {
+    filter: drop-shadow(hsl(var(--shadow-color)) 0px 0px 10px);
+  }
 }
 
 @layer base {
@@ -86,4 +98,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-
