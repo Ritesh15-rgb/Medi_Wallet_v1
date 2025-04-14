@@ -7,6 +7,7 @@ import {firebaseConfig} from "@/lib/firebase/config";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
 import {format} from 'date-fns';
 import {motion} from 'framer-motion';
+import Image from 'next/image';
 
 // Initialize Firebase if not already initialized
 try {
@@ -105,6 +106,17 @@ export default function View() {
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="p-6">
+                  {record.fileUrl && (
+                    <div className="relative w-full h-48 mb-4">
+                      <Image
+                        src={record.fileUrl}
+                        alt={record.fileName}
+                        layout="fill"
+                        objectFit="contain"
+                        className="rounded-md"
+                      />
+                    </div>
+                  )}
                   <p className="text-gray-700">Doctor: {record.doctorName}</p>
                   <p className="text-gray-700">Report Type: {record.reportType}</p>
                   <p className="text-gray-700">Location: {record.location}</p>
