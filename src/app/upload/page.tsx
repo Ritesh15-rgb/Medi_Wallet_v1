@@ -35,6 +35,8 @@ const formSchema = z.object({
     required_error: "A date of upload is required.",
   }),
   notes: z.string().optional(),
+  gender: z.string().optional(),
+  contactNumber: z.string().optional(),
 });
 
 export default function Upload() {
@@ -52,6 +54,8 @@ export default function Upload() {
       location: "",
       date: new Date(),
       notes: "",
+      gender: "",
+      contactNumber: "",
     },
   });
 
@@ -85,6 +89,8 @@ export default function Upload() {
         location: values.location,
         date: values.date,
         notes: values.notes,
+        gender: values.gender || 'N/A',
+        contactNumber: values.contactNumber || 'N/A',
       });
 
       toast({
@@ -228,6 +234,41 @@ export default function Upload() {
                         className="resize-none"
                         {...field}
                       />
+                    </FormControl>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="gender"
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Gender</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select gender"/>
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="Male">Male</SelectItem>
+                        <SelectItem value="Female">Female</SelectItem>
+                        <SelectItem value="Other">Other</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage/>
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="contactNumber"
+                render={({field}) => (
+                  <FormItem>
+                    <FormLabel>Contact Number</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter contact number" {...field} />
                     </FormControl>
                     <FormMessage/>
                   </FormItem>

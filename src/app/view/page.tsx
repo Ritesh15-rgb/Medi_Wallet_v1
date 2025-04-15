@@ -35,6 +35,8 @@ interface Record {
   date: any;
   location: string;
   notes: string; // Added notes field
+  gender: string;
+  contactNumber: string;
 }
 
 const cardVariants = {
@@ -67,6 +69,8 @@ export default function View() {
             date: data.date ? data.date.toDate() : null,
             location: data.location || 'N/A',
             notes: data.notes || 'N/A', // Ensure notes are handled if null
+            gender: data.gender || 'N/A',
+            contactNumber: data.contactNumber || 'N/A',
           };
         });
         setRecords(recordsData);
@@ -132,6 +136,8 @@ export default function View() {
                     <p className="text-gray-700">Report Type: {record.reportType}</p>
                     <p className="text-gray-700">Location: {record.location}</p>
                     <p className="text-gray-700">Notes: {record.notes}</p> {/* Display additional notes */}
+                    <p className="text-gray-700">Gender: {record.gender}</p>
+                    <p className="text-gray-700">Contact: {record.contactNumber}</p>
                     <a href={record.fileUrl} target="_blank" rel="noopener noreferrer"
                        className="text-blue-500 hover:underline">
                       View File

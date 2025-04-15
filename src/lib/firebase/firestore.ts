@@ -23,6 +23,8 @@ interface RecordMetadata {
   location: string;
   date: Date | undefined;
   notes: string; // Added notes field
+  gender: string;
+  contactNumber: string;
 }
 
 export const saveRecordMetadata = async (metadata: RecordMetadata): Promise<void> => {

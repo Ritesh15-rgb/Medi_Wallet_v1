@@ -27,6 +27,9 @@ interface Record {
   fileName: string;
   date: any;
   location: string;
+  notes: string;
+  gender: string;
+  contactNumber: string;
 }
 
 export default function Search() {
@@ -60,6 +63,9 @@ export default function Search() {
           ...data,
           date: data.date ? data.date.toDate() : null,
           location: data.location || 'N/A',
+          notes: data.notes || 'N/A',
+          gender: data.gender || 'N/A',
+          contactNumber: data.contactNumber || 'N/A',
         };
       });
 
@@ -109,6 +115,9 @@ export default function Search() {
                 <p>Doctor: {record.doctorName}</p>
                 <p>Report Type: {record.reportType}</p>
                 <p>Location: {record.location}</p>
+                <p>Notes: {record.notes}</p>
+                <p>Gender: {record.gender}</p>
+                <p>Contact: {record.contactNumber}</p>
                 <a href={record.fileUrl} target="_blank" rel="noopener noreferrer"
                    className="text-blue-500 hover:underline">
                   View File
