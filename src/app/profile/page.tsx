@@ -18,11 +18,33 @@ export default function Profile() {
   const [contact, setContact] = useState("(123) 456-7890");
   const [bio, setBio] = useState("A brief bio about John Doe.");
   const [isEditing, setIsEditing] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState("https://picsum.photos/id/237/200/300");
 
   const handleSave = () => {
     // Implement save functionality here, e.g., update Firebase
     setIsEditing(false);
   };
+
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      //Basic validation
+      if (file.size > 1024 * 1024 * 5) {
+        alert("File size exceeds 5MB");
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (reader.result && typeof reader.result === 'string') {
+          setProfilePhoto(reader.result);
+        }
+      };
+      reader.readAsDataURL(file);
+
+    }
+  };
+
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
@@ -34,9 +56,17 @@ export default function Profile() {
         <CardContent className="p-8">
           <div className="flex flex-col items-center space-y-4">
             <Avatar className="h-24 w-24">
-              <AvatarImage src="https://picsum.photos/id/237/200/300" alt="User Avatar" />
+              <AvatarImage src={profilePhoto} alt="User Avatar" />
               <AvatarFallback>JD</AvatarFallback>
             </Avatar>
+            {isEditing && (
+              <Input
+                type="file"
+                accept="image/*"
+                onChange={handlePhotoChange}
+                className="mb-2"
+              />
+            )}
           </div>
 
           <div className="flex flex-col space-y-4 mt-4">
