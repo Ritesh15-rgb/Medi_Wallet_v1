@@ -19,7 +19,13 @@ export default function Settings() {
         <CardContent className="p-8">
           {/* Add settings components here */}
           <p className="text-gray-500">
-            Settings page content will be added here.
+            Account Settings
+          </p>
+          <p className="text-gray-500">
+            Theme Settings
+          </p>
+          <p className="text-gray-500">
+            Notifications
           </p>
         </CardContent>
       </Card>
