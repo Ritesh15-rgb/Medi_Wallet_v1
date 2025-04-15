@@ -85,16 +85,16 @@ export default function View() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100">
+      <div className="flex flex-col items-center justify-center min-h-screen">
         <p className="text-gray-700">Loading records...</p>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
       <motion.h1
-        className="text-3xl font-bold text-teal-700 mb-4"
+        className="text-3xl font-bold mb-4"
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
@@ -102,46 +102,46 @@ export default function View() {
         View Records
       </motion.h1>
       <ScrollArea className="w-full max-w-4xl rounded-md border shadow-sm">
-      {records.length > 0 ? (
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
-          {records.map((record, index) => (
-            <motion.div key={index} variants={cardVariants} initial="hidden" animate="visible">
-              <Card className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
-                <CardHeader>
-                  <CardTitle className="text-xl font-bold text-teal-600">{record.fileName}</CardTitle>
-                  <CardDescription>
-                    Uploaded on: {formatDate(record.date)}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="p-6">
-                  {record.fileUrl && (
-                    <div className="relative w-full h-48 mb-4">
-                      <Image
-                        src={record.fileUrl}
-                        alt={record.fileName}
-                        width={384}
-                        height={216}
-                        style={{ objectFit: "contain" }}
-                        className="rounded-md"
-                      />
-                    </div>
-                  )}
-                  <p className="text-gray-700">Doctor: {record.doctorName}</p>
-                  <p className="text-gray-700">Report Type: {record.reportType}</p>
-                  <p className="text-gray-700">Location: {record.location}</p>
-                  <a href={record.fileUrl} target="_blank" rel="noopener noreferrer"
-                     className="text-blue-500 hover:underline">
-                    View File
-                  </a>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
-        </div>
-      ) : (
-        <p className="text-gray-700">No records found.</p>
-      )}
-       </ScrollArea>
+        {records.length > 0 ? (
+          <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
+            {records.map((record, index) => (
+              <motion.div key={index} variants={cardVariants} initial="hidden" animate="visible">
+                <Card className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                  <CardHeader>
+                    <CardTitle className="text-xl font-bold">{record.fileName}</CardTitle>
+                    <CardDescription>
+                      Uploaded on: {formatDate(record.date)}
+                    </CardDescription>
+                  </CardHeader>
+                  <CardContent className="p-6">
+                    {record.fileUrl && (
+                      <div className="relative w-full h-48 mb-4">
+                        <Image
+                          src={record.fileUrl}
+                          alt={record.fileName}
+                          width={384}
+                          height={216}
+                          style={{ objectFit: "contain" }}
+                          className="rounded-md"
+                        />
+                      </div>
+                    )}
+                    <p className="text-gray-700">Doctor: {record.doctorName}</p>
+                    <p className="text-gray-700">Report Type: {record.reportType}</p>
+                    <p className="text-gray-700">Location: {record.location}</p>
+                    <a href={record.fileUrl} target="_blank" rel="noopener noreferrer"
+                       className="text-blue-500 hover:underline">
+                      View File
+                    </a>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-700">No records found.</p>
+        )}
+      </ScrollArea>
     </div>
   );
 }

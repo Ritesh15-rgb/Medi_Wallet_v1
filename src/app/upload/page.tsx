@@ -83,10 +83,10 @@ export default function Upload() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
-      <Card className="w-full max-w-md bg-white rounded-xl shadow-xl overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <Card className="w-full max-w-md rounded-xl shadow-md overflow-hidden">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-teal-700">Upload Medical Record</CardTitle>
+          <CardTitle className="text-3xl font-bold">Upload Medical Record</CardTitle>
           <CardDescription className="text-gray-600">
             Store your medical records securely.
           </CardDescription>
