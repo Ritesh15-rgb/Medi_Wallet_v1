@@ -21,10 +21,14 @@ const initializeFirebase = () => {
 
 initializeFirebase();
 
-export const uploadFile = async (file: File): Promise<string> => {
+export const uploadFile = async (file: File | null): Promise<string> => {
+  if (!file) {
+    return ''; // Or handle the case where there's no file, e.g., return a default image URL or an empty string
+  }
+
     if (!firebaseConfig.storageBucket) {
         console.error("Error uploading file: No default bucket found. Did you set the 'storageBucket' property when initializing the app?");
-        throw new Error("Firebase Storage: No default bucket found.");
+        return ''; // Return an empty string or handle the error as needed
     }
 
     try {
@@ -43,5 +47,3 @@ export const uploadFile = async (file: File): Promise<string> => {
         throw new Error(`Failed to upload file: ${error.message}`);
     }
 };
-
-

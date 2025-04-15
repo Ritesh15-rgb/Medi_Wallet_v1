@@ -46,7 +46,6 @@ export default function Upload() {
         downloadURL = await uploadFile(file);
         fileName = file.name;
       }
-
       // Save the metadata to Firestore
       await saveRecordMetadata({
         doctorName,
