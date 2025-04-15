@@ -14,16 +14,18 @@ import { useState, useEffect } from "react";
 import { LogOut } from 'lucide-react'; // Import LogOut icon
 import { useRouter } from 'next/navigation'; // Import useRouter
 import { signOut, getAuth } from 'firebase/auth';
-import { initializeApp } from "firebase/app";
+import { initializeApp, getApps } from "firebase/app";
 import { firebaseConfig } from "@/lib/firebase/config";
 import { useToast } from "@/hooks/use-toast";
 
 // Initialize Firebase if not already initialized
-try {
-  initializeApp(firebaseConfig);
-} catch (e: any) {
-  if (e.code !== 'app/duplicate-app') {
-    console.error('Firebase initialization error', e.message);
+if (!getApps().length) {
+  try {
+    initializeApp(firebaseConfig);
+  } catch (e: any) {
+    if (e.code !== 'app/duplicate-app') {
+      console.error('Firebase initialization error', e.message);
+    }
   }
 }
 
