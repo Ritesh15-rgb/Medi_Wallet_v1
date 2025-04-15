@@ -27,6 +27,7 @@ const formSchema = z.object({
   reportType: z.string().min(1, {
     message: "Report type must be selected.",
   }),
+  customReportType: z.string().optional(),
   location: z.string().min(2, {
     message: "Location must be at least 2 characters.",
   }),
@@ -47,6 +48,7 @@ export default function Upload() {
     defaultValues: {
       doctorName: "",
       reportType: "",
+      customReportType: "",
       location: "",
       date: new Date(),
       notes: "",
@@ -72,9 +74,12 @@ export default function Upload() {
         downloadURL = await uploadFile(file);
         fileName = file.name;
       }
+
+      const reportType = values.reportType === 'Other' ? values.customReportType : values.reportType;
+
       await saveRecordMetadata({
         doctorName: values.doctorName,
-        reportType: values.reportType,
+        reportType: reportType || 'N/A',
         fileUrl: downloadURL,
         fileName: fileName,
         location: values.location,
@@ -148,6 +153,21 @@ export default function Upload() {
                   </FormItem>
                 )}
               />
+              {form.watch("reportType") === "Other" && (
+                <FormField
+                  control={form.control}
+                  name="customReportType"
+                  render={({field}) => (
+                    <FormItem>
+                      <FormLabel>Custom Report Type</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Enter custom report type" {...field} />
+                      </FormControl>
+                      <FormMessage/>
+                    </FormItem>
+                  )}
+                />
+              )}
               <FormField
                 control={form.control}
                 name="location"
