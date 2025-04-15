@@ -36,7 +36,7 @@ export const uploadFile = async (file: File | null): Promise<string> => {
           initializeFirebase();
           if (!storage) {
             console.error("Error uploading file: Firebase Storage not initialized.");
-            throw new Error("Firebase Storage not initialized.");
+            return '';
           }
         }
         const storageRef = ref(storage, `medical-records/${file.name}`);
@@ -44,6 +44,7 @@ export const uploadFile = async (file: File | null): Promise<string> => {
         return await getDownloadURL(snapshot.ref);
     } catch (error: any) {
         console.error("Error uploading file:", error.message);
-        throw new Error(`Failed to upload file: ${error.message}`);
+        return '';
     }
 };
+
