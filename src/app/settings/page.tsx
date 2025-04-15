@@ -30,7 +30,10 @@ if (!getApps().length) {
 }
 
 // Initialize Firebase auth
-const auth = getAuth();
+let auth;
+if (firebaseConfig && firebaseConfig.apiKey) {
+    auth = getAuth();
+}
 
 export default function Settings() {
   const [isDarkMode, setIsDarkMode] = useState(false);
