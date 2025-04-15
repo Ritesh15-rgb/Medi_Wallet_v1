@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import {usePathname} from 'next/navigation';
 import {Button} from "@/components/ui/button";
-import {Home, Upload, Search, User, File} from "lucide-react"; // Changed from Asteroid to File
+import {Home, Upload, Search, User, File, Settings} from "lucide-react"; // Changed from Asteroid to File
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
@@ -11,6 +11,7 @@ const navItems = [
   { href: "/view", label: "View", icon: File }, // Changed from Alarm to File
   { href: "/search", label: "Search", icon: Search },
   { href: "/profile", label: "Profile", icon: User },
+    { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 const Navbar = () => {
@@ -36,4 +37,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
