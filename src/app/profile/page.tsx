@@ -1,22 +1,34 @@
 "use client";
 
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export default function Profile() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
-      <Card className="w-full max-w-md bg-white rounded-xl shadow-xl overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4">
+      <Card className="w-full max-w-md rounded-xl shadow-lg overflow-hidden">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-teal-700">User Profile</CardTitle>
-          <CardDescription className="text-gray-600">
-            Manage your profile information.
-          </CardDescription>
+          <CardTitle className="text-3xl font-bold">User Profile</CardTitle>
+          <CardDescription>Manage your profile information.</CardDescription>
         </CardHeader>
         <CardContent className="p-8">
-          <p className="text-gray-700">
-            This is the profile page where user information will be displayed.
-          </p>
-          {/* Add more profile info here */}
+          <div className="flex flex-col items-center space-y-4">
+            <Avatar className="h-24 w-24">
+              <AvatarImage src="https://picsum.photos/id/237/200/300" alt="User Avatar" />
+              <AvatarFallback>AB</AvatarFallback>
+            </Avatar>
+            <div className="text-center">
+              <p className="text-lg font-semibold">John Doe</p>
+              <p className="text-gray-500">john.doe@example.com</p>
+              <p className="text-gray-500">(123) 456-7890</p>
+            </div>
+          </div>
         </CardContent>
       </Card>
     </div>
