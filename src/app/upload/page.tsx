@@ -111,17 +111,15 @@ export default function Upload() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 bg-secondary">
-      <Card className="w-full max-w-md rounded-xl shadow-md overflow-hidden">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-secondary p-4">
+      <Card className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold text-primary">Upload Medical Record</CardTitle>
-          <CardDescription className="text-gray-600">
-            Store your medical records securely.
-          </CardDescription>
+          <CardTitle className="text-2xl font-bold text-primary">Upload Medical Record</CardTitle>
+          <CardDescription>Store your medical records securely.</CardDescription>
         </CardHeader>
-        <CardContent className="p-8">
+        <CardContent className="p-6">
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(handleSubmit)} className="flex flex-col space-y-6">
+            <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
               <FormField
                 control={form.control}
                 name="doctorName"
@@ -129,7 +127,7 @@ export default function Upload() {
                   <FormItem>
                     <FormLabel>Doctor's Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter doctor's name" {...field} />
+                      <Input placeholder="Dr. John Doe" {...field} />
                     </FormControl>
                     <FormMessage/>
                   </FormItem>
@@ -144,7 +142,7 @@ export default function Upload() {
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
                         <SelectTrigger>
-                          <SelectValue placeholder="Select report type"/>
+                          <SelectValue placeholder="Select a report type"/>
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
@@ -167,7 +165,7 @@ export default function Upload() {
                     <FormItem>
                       <FormLabel>Custom Report Type</FormLabel>
                       <FormControl>
-                        <Input placeholder="Enter custom report type" {...field} />
+                        <Input placeholder="Enter report type" {...field} />
                       </FormControl>
                       <FormMessage/>
                     </FormItem>
@@ -181,7 +179,7 @@ export default function Upload() {
                   <FormItem>
                     <FormLabel>Location</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter location" {...field} />
+                      <Input placeholder="Hospital/Clinic Name" {...field} />
                     </FormControl>
                     <FormMessage/>
                   </FormItem>
@@ -195,25 +193,29 @@ export default function Upload() {
                     <FormLabel>Date</FormLabel>
                     <Popover>
                       <PopoverTrigger asChild>
-                        <Button
-                          variant={"outline"}
-                          className={cn(
-                            "w-full justify-start text-left font-normal",
-                            !field.value && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4"/>
-                          {field.value ? format(field.value, "PPP") : <span>Pick a date</span>}
-                        </Button>
+                        <FormControl>
+                          <Button
+                            variant={"outline"}
+                            className={cn(
+                              "w-[240px] pl-3 text-left font-normal",
+                              !field.value && "text-muted-foreground"
+                            )}
+                          >
+                            {field.value ? (
+                              format(field.value, "PPP")
+                            ) : (
+                              <span>Pick a date</span>
+                            )}
+                            <CalendarIcon className="ml-auto h-4 w-4 opacity-50"/>
+                          </Button>
+                        </FormControl>
                       </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="center" side="bottom">
+                      <PopoverContent className="w-auto p-0" align="start">
                         <Calendar
                           mode="single"
                           selected={field.value}
                           onSelect={field.onChange}
-                          disabled={(date) =>
-                            date > new Date()
-                          }
+                          disabled={(date) => date > new Date()}
                           initialFocus
                         />
                       </PopoverContent>
@@ -274,13 +276,24 @@ export default function Upload() {
                   </FormItem>
                 )}
               />
-              <div>
-                <label htmlFor="file" className="block text-gray-700 text-sm font-bold mb-2">
-                  Select File (Optional)
-                </label>
-                <Input type="file" id="file" onChange={handleFileChange}/>
-                {file && <p className="text-gray-500 text-sm mt-1">Selected file: {file.name}</p>}
-              </div>
+              <FormField
+                control={form.control}
+                name="file"
+                render={() => (
+                  <FormItem>
+                    <FormLabel>Select File (Optional)</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="file"
+                        onChange={handleFileChange}
+                      />
+                    </FormControl>
+                    <FormMessage/>
+                    {file &&
+                      <p>Selected file: {file.name}</p>}
+                  </FormItem>
+                )}
+              />
               <Button type="submit" disabled={uploading}>
                 {uploading ? "Saving..." : "Save"}
               </Button>
