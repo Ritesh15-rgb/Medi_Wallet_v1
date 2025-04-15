@@ -11,28 +11,54 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-import { useTheme } from 'next-themes';
 import { LogOut } from 'lucide-react'; // Import LogOut icon
 import { useRouter } from 'next/navigation'; // Import useRouter
-import { signOut } from 'firebase/auth';
-import { auth } from '@/lib/firebase/auth';
+import { signOut, getAuth } from 'firebase/auth';
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "@/lib/firebase/config";
 import { useToast } from "@/hooks/use-toast";
 
+// Initialize Firebase if not already initialized
+try {
+  initializeApp(firebaseConfig);
+} catch (e: any) {
+  if (e.code !== 'app/duplicate-app') {
+    console.error('Firebase initialization error', e.message);
+  }
+}
+
+// Initialize Firebase auth
+const auth = getAuth();
+
 export default function Settings() {
-  const { theme, setTheme } = useTheme();
-  const [isDarkMode, setIsDarkMode] = useState(theme === 'dark'); // Initialize with current theme
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const router = useRouter();
   const { toast } = useToast();
 
+  useEffect(() => {
+    // Check local storage for theme preference on component mount
+    const storedTheme = localStorage.getItem('theme');
+    if (storedTheme) {
+      setIsDarkMode(storedTheme === 'dark');
+    } else {
+      // If no preference in local storage, respect system preference
+      setIsDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    }
+  }, []);
 
   useEffect(() => {
-    setIsDarkMode(theme === 'dark');
-  }, [theme]);
+    // Apply theme and save preference to local storage when isDarkMode changes
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      localStorage.setItem('theme', 'light');
+    }
+  }, [isDarkMode]);
 
   const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    setIsDarkMode(newTheme === 'dark');
+    setIsDarkMode((prev) => !prev);
   };
 
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
@@ -107,4 +133,3 @@ export default function Settings() {
     </div>
   );
 }
-
