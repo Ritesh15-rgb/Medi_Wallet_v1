@@ -1,13 +1,20 @@
 "use client";
 
-import {useState, useEffect} from "react";
-import {getFirestore, collection, getDocs, query, orderBy} from "firebase/firestore";
-import {initializeApp} from "firebase/app";
-import {firebaseConfig} from "@/lib/firebase/config";
-import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {format} from 'date-fns';
-import {motion} from 'framer-motion';
+import { useState, useEffect } from "react";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  orderBy,
+} from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "@/lib/firebase/config";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { format } from 'date-fns';
+import { motion } from 'framer-motion';
 import Image from 'next/image';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 // Initialize Firebase if not already initialized
 try {
@@ -30,7 +37,7 @@ interface Record {
 }
 
 const cardVariants = {
-  hidden: {opacity: 0, y: 50},
+  hidden: { opacity: 0, y: 50 },
   visible: {
     opacity: 1,
     y: 0,
@@ -88,14 +95,15 @@ export default function View() {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
       <motion.h1
         className="text-3xl font-bold text-teal-700 mb-4"
-        initial={{opacity: 0, y: -50}}
-        animate={{opacity: 1, y: 0}}
-        transition={{duration: 0.7}}
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.7 }}
       >
         View Records
       </motion.h1>
+      <ScrollArea className="w-full max-w-4xl rounded-md border shadow-sm">
       {records.length > 0 ? (
-        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 p-4">
           {records.map((record, index) => (
             <motion.div key={index} variants={cardVariants} initial="hidden" animate="visible">
               <Card className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
@@ -111,8 +119,9 @@ export default function View() {
                       <Image
                         src={record.fileUrl}
                         alt={record.fileName}
-                        layout="fill"
-                        objectFit="contain"
+                        width={384}
+                        height={216}
+                        style={{ objectFit: "contain" }}
                         className="rounded-md"
                       />
                     </div>
@@ -132,6 +141,7 @@ export default function View() {
       ) : (
         <p className="text-gray-700">No records found.</p>
       )}
+       </ScrollArea>
     </div>
   );
 }
