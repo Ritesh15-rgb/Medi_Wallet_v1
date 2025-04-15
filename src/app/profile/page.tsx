@@ -8,8 +8,22 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
 
 export default function Profile() {
+  const [name, setName] = useState("John Doe");
+  const [email, setEmail] = useState("john.doe@example.com");
+  const [contact, setContact] = useState("(123) 456-7890");
+  const [bio, setBio] = useState("A brief bio about John Doe.");
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleSave = () => {
+    // Implement save functionality here, e.g., update Firebase
+    setIsEditing(false);
+  };
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md md:max-w-lg rounded-xl shadow-lg overflow-hidden">
@@ -21,17 +35,54 @@ export default function Profile() {
           <div className="flex flex-col items-center space-y-4">
             <Avatar className="h-24 w-24">
               <AvatarImage src="https://picsum.photos/id/237/200/300" alt="User Avatar" />
-              <AvatarFallback>AB</AvatarFallback>
+              <AvatarFallback>JD</AvatarFallback>
             </Avatar>
-            <div className="text-center">
-              <p className="text-lg font-semibold">John Doe</p>
-              <p className="text-gray-500">john.doe@example.com</p>
-              <p className="text-gray-500">(123) 456-7890</p>
-            </div>
+          </div>
+
+          <div className="flex flex-col space-y-4 mt-4">
+            {isEditing ? (
+              <>
+                <Input
+                  type="text"
+                  placeholder="Name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="mb-2"
+                />
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="mb-2"
+                />
+                <Input
+                  type="tel"
+                  placeholder="Contact Number"
+                  value={contact}
+                  onChange={(e) => setContact(e.target.value)}
+                  className="mb-2"
+                />
+                <textarea
+                  placeholder="Bio"
+                  value={bio}
+                  onChange={(e) => setBio(e.target.value)}
+                  className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 mb-2"
+                />
+                <Button onClick={handleSave}>Save Changes</Button>
+              </>
+            ) : (
+              <>
+                <p className="text-lg font-semibold">{name}</p>
+                <p className="text-gray-500">{email}</p>
+                <p className="text-gray-500">{contact}</p>
+                <p className="text-gray-500">{bio}</p>
+                <Button onClick={() => setIsEditing(true)}>Edit Profile</Button>
+              </>
+            )}
           </div>
         </CardContent>
       </Card>
     </div>
   );
 }
-
