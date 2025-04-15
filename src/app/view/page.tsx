@@ -114,7 +114,7 @@ export default function View() {
               <motion.div key={index} variants={cardVariants} initial="hidden" animate="visible">
                 <Card className="rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                   <CardHeader>
-                    <CardTitle className="text-xl font-bold">{record.fileName}</CardTitle>
+                    <CardTitle className="text-xl font-bold">Medical Record</CardTitle>
                     <CardDescription>
                       Uploaded on: {formatDate(record.date)}
                     </CardDescription>
