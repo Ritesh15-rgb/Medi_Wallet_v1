@@ -1,4 +1,4 @@
-;"use client";
+"use client";
 
 import {
   Card,
@@ -12,10 +12,18 @@ import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
 import { useTheme } from 'next-themes';
+import { LogOut } from 'lucide-react'; // Import LogOut icon
+import { useRouter } from 'next/navigation'; // Import useRouter
+import { signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase/auth';
+import { useToast } from "@/hooks/use-toast";
 
 export default function Settings() {
   const { theme, setTheme } = useTheme();
   const [isDarkMode, setIsDarkMode] = useState(theme === 'dark'); // Initialize with current theme
+  const router = useRouter();
+  const { toast } = useToast();
+
 
   useEffect(() => {
     setIsDarkMode(theme === 'dark');
@@ -28,6 +36,23 @@ export default function Settings() {
   };
 
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
+
+  const handleSignOut = async () => {
+    try {
+      await signOut(auth);
+      toast({
+        title: "Success",
+        description: "Signed out successfully!",
+      });
+      router.push("/"); // Redirect to home page after signing out
+    } catch (error: any) {
+      toast({
+        title: "Error",
+        description: error.message || "Failed to sign out.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleSave = () => {
     // Implement save functionality here
@@ -68,6 +93,13 @@ export default function Settings() {
             </div>
           </div>
 
+          {/* Sign Out Button */}
+          <div>
+            <Button variant="destructive" onClick={handleSignOut} className="w-full">
+              Sign Out <LogOut className="ml-2" />
+            </Button>
+          </div>
+
           {/* Save Button */}
           <Button onClick={handleSave}>Save Changes</Button>
         </CardContent>
@@ -75,3 +107,4 @@ export default function Settings() {
     </div>
   );
 }
+
