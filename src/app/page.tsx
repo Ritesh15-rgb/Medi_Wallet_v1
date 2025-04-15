@@ -27,7 +27,7 @@ const LandingPage = () => {
               <Button
                 variant="primary"
                 size="lg"
-                className="animate-pulse"
+                className="animate-pulse hover:bg-teal-700 transition duration-300"
                 onClick={() => router.push("/upload")}
               >
                 Get Started for Free
