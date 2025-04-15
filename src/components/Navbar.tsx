@@ -20,6 +20,10 @@ const Navbar = () => {
   const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
 
+    const handleNavigation = () => {
+        setIsOpen(false); // Close the sheet
+    };
+
   return (
     <nav className="bg-secondary border-b sticky top-0 z-50">
       <div className="container flex items-center justify-between py-4">
@@ -34,7 +38,7 @@ const Navbar = () => {
               <SheetContent className="w-64">
                   <div className="flex flex-col space-y-4">
                       {navItems.map((item) => (
-                          <Link key={item.href} href={item.href}>
+                          <Link key={item.href} href={item.href} onClick={handleNavigation}>
                               <Button variant="ghost" className={pathname === item.href ? "text-primary" : ""}>
                                   <item.icon className="mr-2 h-4 w-4" />
                                   {item.label}
@@ -50,4 +54,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
