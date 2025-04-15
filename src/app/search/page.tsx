@@ -94,6 +94,7 @@ export default function Search() {
           placeholder="Search by doctor's name, filename, or report type"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
+          className="w-full md:w-auto"
         />
         <Button type="submit" disabled={loading}>
           {loading ? "Searching..." : "Search"}
@@ -132,3 +133,4 @@ export default function Search() {
     </div>
   );
 }
+

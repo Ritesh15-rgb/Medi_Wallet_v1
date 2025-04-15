@@ -90,7 +90,7 @@ export default function Upload() {
         date: values.date,
         notes: values.notes,
         gender: values.gender || 'N/A',
-        contactNumber: values.contactNumber || 'N/A',
+        contactNumber: values.contactNumber,
       });
 
       toast({
@@ -112,7 +112,7 @@ export default function Upload() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-secondary p-4">
-      <Card className="w-full max-w-md bg-white rounded-lg shadow-md overflow-hidden">
+      <Card className="w-full max-w-md md:max-w-lg bg-white rounded-lg shadow-md overflow-hidden">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl font-bold text-primary">Upload Medical Record</CardTitle>
           <CardDescription>Store your medical records securely.</CardDescription>
@@ -304,3 +304,4 @@ export default function Upload() {
     </div>
   );
 }
+

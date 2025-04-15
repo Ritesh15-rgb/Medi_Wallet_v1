@@ -18,7 +18,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-teal-100 to-blue-100 p-4">
-      <Card className="w-full max-w-md bg-white rounded-xl shadow-xl overflow-hidden">
+      <Card className="w-full max-w-md md:max-w-lg bg-white rounded-xl shadow-xl overflow-hidden">
         <CardHeader className="text-center">
           <CardTitle className="text-4xl font-extrabold text-teal-700 tracking-tight">MediVault</CardTitle>
           <CardDescription className="text-lg text-gray-600">
@@ -34,3 +34,4 @@ export default function Home() {
     </div>
   );
 }
+
