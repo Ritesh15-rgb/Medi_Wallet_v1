@@ -8,15 +8,25 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+// import { useTheme } from 'next-themes';
 
 export default function Settings() {
-  const [name, setName] = useState("John Doe");
-  const [email, setEmail] = useState("john.doe@example.com");
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  // const { theme, setTheme } = useTheme();
+  const [isDarkMode, setIsDarkMode] = useState(false); // Initialize with current theme
+
+  useEffect(() => {
+    setIsDarkMode(false);
+  }, []);
+
+  const toggleTheme = () => {
+    //const newTheme = theme === 'light' ? 'dark' : 'light';
+    //setTheme(newTheme);
+    setIsDarkMode(!isDarkMode);
+  };
+
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
 
   const handleSave = () => {
@@ -32,33 +42,6 @@ export default function Settings() {
           <CardDescription>Manage your application settings.</CardDescription>
         </CardHeader>
         <CardContent className="p-8 space-y-6">
-          {/* Account Settings */}
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Account Settings</h3>
-            <div className="space-y-2">
-              <div className="grid gap-2">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  type="text"
-                  id="name"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="Your Name"
-                />
-              </div>
-              <div className="grid gap-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  type="email"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Your Email"
-                />
-              </div>
-            </div>
-          </div>
-
           {/* Theme Settings */}
           <div>
             <h3 className="text-xl font-semibold mb-2">Theme Settings</h3>
@@ -67,7 +50,7 @@ export default function Settings() {
               <Switch
                 id="darkMode"
                 checked={isDarkMode}
-                onCheckedChange={(checked) => setIsDarkMode(checked)}
+                onCheckedChange={toggleTheme}
               />
             </div>
           </div>
