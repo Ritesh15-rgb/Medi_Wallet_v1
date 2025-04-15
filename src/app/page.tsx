@@ -27,6 +27,7 @@ const LandingPage = () => {
               <Button
                 variant="primary"
                 size="lg"
+                className="animate-pulse"
                 onClick={() => router.push("/upload")}
               >
                 Get Started for Free
