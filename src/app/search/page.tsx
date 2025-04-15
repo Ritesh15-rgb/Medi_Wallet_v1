@@ -1,7 +1,7 @@
 "use client";
 
 import {useState, useEffect} from "react";
-import {getFirestore, collection, query, where, getDocs, orderBy} from "firebase/firestore";
+import {getFirestore, collection, query, where, getDocs, orderBy, or} from "firebase/firestore";
 import {initializeApp} from "firebase/app";
 import {firebaseConfig} from "@/lib/firebase/config";
 import {Card, CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
@@ -33,15 +33,23 @@ export default function Search() {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState<Record[]>([]);
   const [loading, setLoading] = useState(false);
+  const [noResults, setNoResults] = useState(false);
 
   const handleSearch = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setNoResults(false); // Reset noResults state on new search
     try {
       const q = query(
         collection(db, "medicalRecords"),
-        where("doctorName", ">=", searchTerm),
-        where("doctorName", "<=", searchTerm + '\uf8ff'),
+        or(
+          where("doctorName", ">=", searchTerm),
+          where("doctorName", "<=", searchTerm + '\uf8ff'),
+          where("fileName", ">=", searchTerm),
+          where("fileName", "<=", searchTerm + '\uf8ff'),
+          where("reportType", ">=", searchTerm),
+          where("reportType", "<=", searchTerm + '\uf8ff'),
+        ),
         orderBy("doctorName"),
         orderBy("date", "desc")
       );
@@ -54,6 +62,10 @@ export default function Search() {
           location: data.location || 'N/A',
         };
       });
+
+      if (results.length === 0) {
+        setNoResults(true);
+      }
       setSearchResults(results);
     } catch (error: any) {
       console.error("Error searching records:", error.message);
@@ -73,7 +85,7 @@ export default function Search() {
       <form onSubmit={handleSearch} className="flex space-x-2 mb-4">
         <Input
           type="text"
-          placeholder="Search by doctor's name"
+          placeholder="Search by doctor's name, filename, or report type"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
@@ -81,6 +93,8 @@ export default function Search() {
           {loading ? "Searching..." : "Search"}
         </Button>
       </form>
+      {loading && <p className="text-gray-700">Searching records...</p>}
+      {noResults && !loading && <p className="text-gray-700">No records found matching your search.</p>}
       {searchResults.length > 0 ? (
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
           {searchResults.map((record, index) => (
@@ -103,8 +117,8 @@ export default function Search() {
             </Card>
           ))}
         </div>
-      ) : (
-        <p className="text-gray-700">No records found.</p>
+      ) : (!loading && !noResults) && (
+        <p className="text-gray-700">Enter a search term to find records.</p>
       )}
     </div>
   );
