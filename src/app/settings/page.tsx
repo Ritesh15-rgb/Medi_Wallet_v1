@@ -1,4 +1,4 @@
-"use client";
+;"use client";
 
 import {
   Card,
@@ -11,20 +11,20 @@ import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Button } from "@/components/ui/button";
 import { useState, useEffect } from "react";
-// import { useTheme } from 'next-themes';
+import { useTheme } from 'next-themes';
 
 export default function Settings() {
-  // const { theme, setTheme } = useTheme();
-  const [isDarkMode, setIsDarkMode] = useState(false); // Initialize with current theme
+  const { theme, setTheme } = useTheme();
+  const [isDarkMode, setIsDarkMode] = useState(theme === 'dark'); // Initialize with current theme
 
   useEffect(() => {
-    setIsDarkMode(false);
-  }, []);
+    setIsDarkMode(theme === 'dark');
+  }, [theme]);
 
   const toggleTheme = () => {
-    //const newTheme = theme === 'light' ? 'dark' : 'light';
-    //setTheme(newTheme);
-    setIsDarkMode(!isDarkMode);
+    const newTheme = theme === 'light' ? 'dark' : 'light';
+    setTheme(newTheme);
+    setIsDarkMode(newTheme === 'dark');
   };
 
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
