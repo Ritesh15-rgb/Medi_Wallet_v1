@@ -34,6 +34,7 @@ interface Record {
   fileName: string;
   date: any;
   location: string;
+  notes: string; // Added notes field
 }
 
 const cardVariants = {
@@ -65,6 +66,7 @@ export default function View() {
             ...data,
             date: data.date ? data.date.toDate() : null,
             location: data.location || 'N/A',
+            notes: data.notes || 'N/A', // Ensure notes are handled if null
           };
         });
         setRecords(recordsData);
@@ -129,6 +131,7 @@ export default function View() {
                     <p className="text-gray-700">Doctor: {record.doctorName}</p>
                     <p className="text-gray-700">Report Type: {record.reportType}</p>
                     <p className="text-gray-700">Location: {record.location}</p>
+                    <p className="text-gray-700">Notes: {record.notes}</p> {/* Display additional notes */}
                     <a href={record.fileUrl} target="_blank" rel="noopener noreferrer"
                        className="text-blue-500 hover:underline">
                       View File

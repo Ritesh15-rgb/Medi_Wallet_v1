@@ -22,6 +22,7 @@ interface RecordMetadata {
   fileName: string;
   location: string;
   date: Date | undefined;
+  notes: string; // Added notes field
 }
 
 export const saveRecordMetadata = async (metadata: RecordMetadata): Promise<void> => {

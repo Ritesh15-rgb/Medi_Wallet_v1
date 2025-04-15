@@ -13,6 +13,8 @@ import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
 import {cn} from "@/lib/utils";
 import {format} from "date-fns";
 import {CalendarIcon} from "lucide-react";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {Textarea} from "@/components/ui/textarea";
 
 export default function Upload() {
   const [file, setFile] = useState<File | null>(null);
@@ -20,6 +22,7 @@ export default function Upload() {
   const [reportType, setReportType] = useState("");
   const [location, setLocation] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
+  const [notes, setNotes] = useState(""); // Added state for additional notes
   const [uploading, setLoading] = useState(false);
   const {toast} = useToast();
   const router = useRouter();
@@ -54,6 +57,7 @@ export default function Upload() {
         fileName: fileName,
         location: location,
         date: date,
+        notes: notes, // Save additional notes
       });
 
       toast({
@@ -67,6 +71,7 @@ export default function Upload() {
       setReportType("");
       setLocation("");
       setDate(undefined);
+      setNotes("");
 
       // Redirect to the view page
       router.push("/view");
@@ -110,14 +115,18 @@ export default function Upload() {
               <label htmlFor="reportType" className="block text-gray-700 text-sm font-bold mb-2">
                 Report Type
               </label>
-              <Input
-                type="text"
-                id="reportType"
-                placeholder="Enter report type"
-                value={reportType}
-                onChange={(e) => setReportType(e.target.value)}
-                required
-              />
+              <Select onValueChange={(value) => setReportType(value)}>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select report type"/>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Prescription">Prescription</SelectItem>
+                  <SelectItem value="Lab Report">Lab Report</SelectItem>
+                  <SelectItem value="Radiology Report">Radiology Report</SelectItem>
+                  <SelectItem value="Discharge Summary">Discharge Summary</SelectItem>
+                  <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
             <div>
               <label htmlFor="location" className="block text-gray-700 text-sm font-bold mb-2">
@@ -162,6 +171,19 @@ export default function Upload() {
                   />
                 </PopoverContent>
               </Popover>
+            </div>
+
+            <div>
+              <label htmlFor="notes" className="block text-gray-700 text-sm font-bold mb-2">
+                Additional Notes
+              </label>
+              <Textarea
+                id="notes"
+                placeholder="Enter any additional notes"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                className="resize-none"
+              />
             </div>
 
             <div>
