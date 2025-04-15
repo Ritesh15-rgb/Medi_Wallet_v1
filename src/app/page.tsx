@@ -26,7 +26,7 @@ const LandingPage = () => {
             initial="hidden"
             animate="visible"
           >
-            Welcome to MediVault: Your Medical Records, Secured
+            Welcome to Medi Wallet: Your Medical Records, Secured
           </motion.h1>
           <motion.p
             className="text-xl mb-8 text-gray-700"
@@ -257,7 +257,7 @@ const LandingPage = () => {
           </div>
           <div>
             <p className="text-gray-600">
-              &copy; {new Date().getFullYear()} MediVault. All rights reserved.
+              &copy; {new Date().getFullYear()} MediWallet. All rights reserved.
             </p>
           </div>
         </div>

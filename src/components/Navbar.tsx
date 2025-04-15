@@ -27,7 +27,7 @@ const Navbar = () => {
   return (
     <nav className="bg-secondary border-b sticky top-0 z-50">
       <div className="container flex items-center justify-between py-4">
-        <Link href="/" className="font-bold text-xl text-primary">MediVault</Link>
+        <Link href="/" className="font-bold text-xl text-primary">Medi Wallet</Link>
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
               <SheetTrigger asChild>
                   <Button variant="outline">
